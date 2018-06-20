@@ -1,9 +1,7 @@
 from subprocess import Popen, PIPE, call
 
-process = Popen(["curl","www.google.com"], stdin = PIPE)
+process = Popen(["curl","www.google.com"], stdout = process)
 output = process.stdout.readline()
+print(output)
 
-from subprocess import Popen, PIPE, call
 
-process = Popen(["curl","www.google.com"], stdin = PIPE)
-output = process.stdout.readline()
