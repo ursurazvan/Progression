@@ -6,8 +6,7 @@ process = Popen(["curl","-c","-","http://challenge01.root-me.org/programmation/c
 output = 'asd'
 while output!='':
 	output = process.stdout.readline()
-	output = output.decode("utf-8")
-	print(output)	
+	output = output.decode("utf-8")	
 	if 'n+1' in output:
 		a=re.findall("[-\d]+", output)
 		if a[-2]=='-':
@@ -22,7 +21,10 @@ while output!='':
 	if 'You must find U' in output:
 		a=re.findall("[-\d]+", output)
 		arguments.append(a[0])
-		print(arguments)
+	if 'PHPSESSID' in output:
+		cook=output.split()
+		cook=cook[-1]
+		
 process.stdout.close()
 
 a = list(map(int, arguments))
@@ -34,4 +36,6 @@ print(res)
 site="http://challenge01.root-me.org/programmation/ch1/ep1_v.php?result="
 site=site+str(res)
 print(site)
-a=call(["curl","--cookie",site])
+cookie = "PHPSESSID="+cook
+print(cookie)
+a=call(["curl","-v","--cookie",cookie,site])
